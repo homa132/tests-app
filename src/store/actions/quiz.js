@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { FETCH_QUIZES_START, FETCH_QUIZES_SUCCES, FETCH_QUIZES_ERROR } from './actionsTypes';
+import { FETCH_QUIZES_START, FETCH_QUIZES_SUCCES, FETCH_QUIZES_ERROR,
+    FETCH_QUIZ_START, FETCH_QUIZ_SUCCES, FETCH_QUIZ_ERROR} from './actionsTypes';
 
 
 export function fetchQuizes () {
@@ -39,6 +40,43 @@ export function fetchQuizesSucces(quizes){
 export function fetchQuizesError(e){
     return {
         type:FETCH_QUIZES_ERROR,
+        error: e
+    }
+}
+
+export function fetchQuizById(id){
+    return async dispatch => {
+        dispatch(fetchQuizStart())
+        try{
+            const respons  = await axios.get(`https://react-quiz-ea95a.firebaseio.com/quises/${id}.json`);
+            const quiz =  respons.data;
+            dispatch(fetchQuizSucces(quiz))
+            
+            }catch(e){
+                dispatch(fetchQuizError(e))
+            }
+
+
+
+    }
+}
+
+export function fetchQuizStart (){
+    return{
+        type: FETCH_QUIZ_START
+    }
+}
+
+export function fetchQuizSucces(quiz){
+    return {
+        type: FETCH_QUIZ_SUCCES,
+        quiz
+    }
+}
+
+export function fetchQuizError (e){
+    return {
+        type: FETCH_QUIZ_ERROR,
         error: e
     }
 }

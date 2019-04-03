@@ -38,7 +38,7 @@ export default class Auth extends React.Component{
         quiz:[],
         isFormValid:false,
         formControls:createFormControls(),
-        rightAnswer: '1'
+        rightAnswer: 1
     }
 
     submitHendler= (e) => {e.preventDefault()}
